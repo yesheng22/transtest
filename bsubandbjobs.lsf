@@ -1,0 +1,5 @@
+path=`cat collection_path.txt`
+cd $path
+bash bsub_run_gy2_gaptrans.lsf
+cd ..
+bjobs -u shengye -q gyang2 >bjobs.txt

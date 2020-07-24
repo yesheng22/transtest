@@ -1,0 +1,11 @@
+#BSUB -q gyang2 
+#BSUB -o out%J.txt
+#BSUB -e error%J.txt
+#BSUB -J python
+#BSUB -n 8
+#BSUB -R "span[ptile=48]"
+###BSUB -m "gpu05"
+
+source /share/apps/intel/ipsxe2015u5/parallel_studio_xe_2015/psxevars.sh >/dev/null 2>&1
+source activate py364
+python main.py >printscreen.txt

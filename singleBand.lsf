@@ -1,0 +1,15 @@
+#!/bin/bash
+#BSUB -q debug 
+#BSUB -o out%J.txt
+#BSUB -e error%J.txt
+#BSUB -J vasp.job
+#BSUB -n 8
+#BSUB -R "span[ptile=48]"
+###BSUB -m "gpu05"
+
+source /share/apps/intel/ipsxe2015u5/parallel_studio_xe_2015/psxevars.sh >/dev/null 2>&1
+####################################the part above is decided by the cluster which you use
+####################################the part below is the scan calculation, and please find some detail informations about the calculation in the PPT
+####################################there are two or one default input file, PPOSCAR (primitive cell) and soc.txt (touch a soc.txt file if you want to do a soc calculation)
+####################################some necessary holdability document must be put in your bin directory. (GETPOTCARPAW, PAW, lattice_parameter, getgap, vasp.5.4.4, chgsum.pl, bader, dospar, phonopy, GETKPOINTS, kpath.py, bandstru, getfulleig, transoptic_e, derivation)
+mpirun -bootstrap lsf  /share/home/jyang/bin/vasp.5.4.4.psym > result

@@ -1,0 +1,6 @@
+#!/bin/bash
+emptyqueue=`bhosts|grep ok|grep -v 24|grep -v 28`
+lenemptyqueue=`expr length "$emptyqueue"`
+if [ "$lenemptyqueue" -eq 1 ]; then
+    echo 22222
+fi

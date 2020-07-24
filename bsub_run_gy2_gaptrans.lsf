@@ -1,0 +1,15 @@
+for dir in `ls|grep -v lsf`
+do
+  cd ${dir}
+  cp /share/home/shengye/mylsf_INCAR/* `pwd`
+  test1=`find -name test1`
+  test1label=`expr length "$test1"`
+  if (($test1label <= 0))
+  then
+    bsub < run_gyang2_gaptrans.lsf > submitresult.txt
+    filename=`awk '{print $2}' submitresult.txt`
+    touch ${filename}.txt
+    rm submitresult.txt
+    cd ..
+  fi
+done

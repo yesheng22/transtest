@@ -1,0 +1,46 @@
+#!/bin/bash
+# #####make direction PFcollection########
+
+# PFcollection=`find -name PFcollection -type d`
+# a=`expr length "$PFcollection"`
+# if(($a>0))
+# then
+#   rm -r PFcollection
+#   mkdir PFcollection
+# else
+#   mkdir PFcollection
+# fi
+
+######copy download_RTA-trace-e_ptype.txt to PFcollection and rename as filepath######
+path=`cat collection_path.txt`
+cd $path
+pwd=`pwd`
+for dir in `ls|grep -v lsf|grep -v txt|grep -v PFcollection|grep -v csv`
+do
+  cd ${dir}/test1/
+  Transport=`ls|grep Transport`
+  c=`expr length "$Transport"`
+  if (($c>0))
+  then
+    cd Transport/test_scan/
+    down=`find -name download_RTA-trace-e_ptype.txt`
+    b=`expr length "$down"`
+    if (($b>0))
+    then
+      cp download_RTA-trace-e_ptype.txt $pwd/PFcollection/${dir}.txt
+    else
+      Transgap=`getgap`
+      cd $pwd/${dir}
+      job=`ls *.txt|grep "<"`
+      echo "Transgap $Transgap-JobID $job-${dir} no download_RTA-trace-e_ptype.txt" >> $pwd/collectresult.txt
+    fi
+    cd $pwd
+  else
+    cd ..
+    job=`ls *.txt|grep "<"`
+    cd test1/Band/test_scan/
+    Bandgap=`getgap`
+    echo "Bandgap $Bandgap-JobID $job-${dir} no download_RTA-trace-e_ptype.txt" >> $pwd/collectresult.txt
+    cd $pwd
+  fi
+done
